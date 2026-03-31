@@ -1,26 +1,387 @@
 @import "tailwindcss";
 
+/* ===== DESIGN SYSTEM: Open Techiz Clone ===== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --bg-primary: #050811;
+  --bg-secondary: #0a1025;
+  --bg-surface: #111827;
+  --bg-surface-light: #1a2340;
+  --bg-surface-hover: #1e293b;
+
+  --text-primary: #f0f4f8;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-lime: #b3d44a;
+  --accent-lime-hover: #c5e35e;
+  --accent-lime-dark: #8fb33a;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-green: #22c55e;
+
+  --border-default: #1e293b;
+  --border-light: #334155;
+  --border-accent: rgba(179, 212, 74, 0.3);
+
+  --glow-blue: rgba(59, 130, 246, 0.15);
+  --glow-lime: rgba(179, 212, 74, 0.1);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Font */
+  --font-primary: var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
 }
 
+/* Light theme overrides */
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-surface-light: #f1f5f9;
+  --bg-surface-hover: #e2e8f0;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --accent-lime: #65a30d;
+  --accent-lime-hover: #4d7c0f;
+  --accent-lime-dark: #3f6212;
+
+  --border-default: #e2e8f0;
+  --border-light: #cbd5e1;
+  --border-accent: rgba(101, 163, 13, 0.3);
+
+  --glow-blue: rgba(59, 130, 246, 0.08);
+  --glow-lime: rgba(101, 163, 13, 0.06);
+}
+
+/* ===== Tailwind Theme Tokens ===== */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-light: var(--bg-surface-light);
+  --color-bg-surface-hover: var(--bg-surface-hover);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-accent-lime: var(--accent-lime);
+  --color-accent-lime-hover: var(--accent-lime-hover);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-green: var(--accent-green);
+
+  --color-border-default: var(--border-default);
+  --color-border-light: var(--border-light);
+  --color-border-accent: var(--border-accent);
+
+  --color-glow-blue: var(--glow-blue);
+  --color-glow-lime: var(--glow-lime);
+
+  --font-sans: var(--font-primary);
+
+  /* Custom animations */
+  --animate-fade-in: fadeIn 0.6s ease forwards;
+  --animate-slide-up: slideUp 0.6s ease forwards;
+  --animate-slide-down: slideDown 0.3s ease forwards;
+  --animate-scale-in: scaleIn 0.3s ease forwards;
+  --animate-pulse-glow: pulseGlow 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Base Styles ===== */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(179, 212, 74, 0.3);
+  color: #fff;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-lime);
+}
+
+/* ===== Utility Classes ===== */
+
+/* Glassmorphism */
+.glass {
+  background: rgba(5, 8, 17, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-default);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Dot grid background */
+.dot-grid {
+  background-image: radial-gradient(circle, var(--border-default) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Glow effects */
+.glow-blue {
+  box-shadow: 0 0 60px 20px var(--glow-blue);
+}
+
+.glow-lime {
+  box-shadow: 0 0 40px 10px var(--glow-lime);
+}
+
+.glow-bg-blue {
+  background: radial-gradient(ellipse at center, var(--glow-blue) 0%, transparent 70%);
+}
+
+.glow-bg-lime {
+  background: radial-gradient(ellipse at center, var(--glow-lime) 0%, transparent 70%);
+}
+
+/* Card styles */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  border-color: var(--border-light);
+  background: var(--bg-surface-light);
+  transform: translateY(-2px);
+}
+
+/* Section divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-lime), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Accent button */
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: var(--accent-lime);
+  color: #050811;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-accent:hover {
+  background: var(--accent-lime-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--glow-lime);
+}
+
+/* Outline button */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: var(--text-primary);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-outline:hover {
+  border-color: var(--accent-lime);
+  color: var(--accent-lime);
+  transform: translateY(-1px);
+}
+
+/* Tag / pill */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  transition: all var(--transition-fast);
+}
+
+.tag:hover {
+  border-color: var(--accent-lime);
+  color: var(--accent-lime);
+}
+
+/* Number label (01, 02, 03) */
+.number-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-lime);
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Keyframes ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Container ===== */
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding: 0 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding: 0 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-custom {
+    padding: 0 5rem;
+  }
 }
